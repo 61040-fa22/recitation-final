@@ -10,6 +10,7 @@ import * as userValidator from '../server/user/middleware';
 import {userRouter} from '../server/user/router';
 import {freetRouter} from '../server/freet/router';
 import MongoStore from 'connect-mongo';
+import path from "path";
 
 // Load environmental variables
 dotenv.config({});
@@ -72,11 +73,16 @@ app.use('/api/users', userRouter);
 app.use('/api/freets', freetRouter);
 
 // Catch all the other routes and display error message
-app.all('*', (req: Request, res: Response) => {
-  res.status(404).json({
-    error: 'Page not found'
-  });
+const vuePath = path.resolve(__dirname, "..", "client", "public");
+app.use(express.static(vuePath));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(vuePath, "index.html"));
 });
+// app.all('*', (req: Request, res: Response) => {
+//   res.status(404).json({
+//     error: 'Page not found'
+//   });
+// });
 
 // Create server to listen to request at specified port
 const server = http.createServer(app);
