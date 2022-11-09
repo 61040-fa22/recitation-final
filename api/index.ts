@@ -68,21 +68,21 @@ app.use(session({
 // This makes sure that if a user is logged in, they still exist in the database
 app.use(userValidator.isCurrentSessionUserExists);
 
-// Add routers from routes folder
-app.use('/api/users', userRouter);
-app.use('/api/freets', freetRouter);
-
 // Catch all the other routes and display error message
 const vuePath = path.resolve(__dirname, "..", "client", "public");
 app.use(express.static(vuePath));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(vuePath, "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(vuePath, "index.html"));
+// });
 // app.all('*', (req: Request, res: Response) => {
 //   res.status(404).json({
 //     error: 'Page not found'
 //   });
 // });
+
+// Add routers from routes folder
+app.use('/api/users', userRouter);
+app.use('/api/freets', freetRouter);
 
 // Create server to listen to request at specified port
 const server = http.createServer(app);
