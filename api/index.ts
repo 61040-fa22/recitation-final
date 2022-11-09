@@ -69,7 +69,8 @@ app.use(session({
 app.use(userValidator.isCurrentSessionUserExists);
 
 // Catch all the other routes and display error message
-const vuePath = path.resolve(__dirname, "..", "client", "public");
+const isProduction = process.env.NODE_ENV === 'production';
+const vuePath = path.resolve(__dirname, "..", "client", isProduction ? "dist" : "public");
 app.use(express.static(vuePath));
 // app.get("*", (req, res) => {
 //   res.sendFile(path.join(vuePath, "index.html"));
