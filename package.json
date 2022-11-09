@@ -8,7 +8,7 @@
         "lint": "eslint . --fix --ext=.ts,.vue",
         "start": "ts-node api/index.ts",
         "dev": "nodemon api/index.ts -e js,ts,json",
-        "heroku-postbuild": "npm run build"
+        "heroku-postbuild": "npm install --only=dev && npm run build"
     },
     "dependencies": {
         "connect-history-api-fallback": "^1.6.0",
@@ -26,7 +26,9 @@
         "vue": "^2.7.13",
         "vue-router": "^3.6.5",
         "vuex": "^3.6.2",
-        "vuex-persistedstate": "^4.1.0",
+        "vuex-persistedstate": "^4.1.0"
+    },
+    "devDependencies": {
         "@babel/eslint-parser": "^7.19.1",
         "@vue/cli-plugin-router": "^5.0.8",
         "@vue/cli-service": "^5.0.8",
