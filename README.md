@@ -1,9 +1,16 @@
 # Simple Chat App
 
-### Introducing Socket.IO
+### Socket.IO
+
+Install socket.io
 
 ```shell
-npm install socket.io
+npm install socket.io socket.io-client
+```
+
+Server
+
+```typescript
 ```
 
 

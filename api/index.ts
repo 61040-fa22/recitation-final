@@ -1,10 +1,8 @@
 // This file must be in the /api folder for Vercel to detect it as a serverless function
-import type {Request, Response} from 'express';
 import express from 'express';
 import session from 'express-session';
 import logger from 'morgan';
 import http from 'http';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from "path";
 import { Server } from "socket.io";
