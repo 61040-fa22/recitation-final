@@ -53,7 +53,7 @@ const io = new Server(server, { // create websocket endpoint so that server & cl
   }
 }); 
 
-const users : { [key: string]: string} = {};
+const users : { [key: string]: string} = {}; // temporary array to save socketId-username pairs. In practice, use mongodb.
 
 io.on("connection", (socket) => {
   console.log(`user ${socket.id} is connected.`);
@@ -82,5 +82,5 @@ io.on("connection", (socket) => {
         username: "Server",
         userId: "",
       });
-  })
+  });
 });
