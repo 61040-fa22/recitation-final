@@ -16,8 +16,14 @@
             Change name
         </button>
     </section>
-    <section>
-        <h2>Say something</h2>
+
+    <section v-if="joinedRoom.length === 0">
+        <div v-for="room in rooms" :key="room" @click="joinRoom(room)">
+            {{ room }}
+        </div>
+    </section>
+    <section v-else>
+        <h2>{{ joinedRoom }}</h2>
         <input
             type="text"
             name="message"
@@ -28,14 +34,15 @@
         >
             Send chat
         </button>
-    </section>
-    <section>
         <div v-for="message in messages" :key="message.id">
             <b>
             {{ message.username }}
             </b>
             : {{ message.text }}
         </div>
+        <button @click="leaveRoom">
+            Leave this room
+        </button>
     </section>
   </main>
 </template>
@@ -50,6 +57,8 @@ export default {
         username: "Anonymous",
         text: "",
         messages: [],
+        rooms: ["Room1", "Room2"], // list of strings (room names)
+        joinedRoom: "",
     }
   },
   created() {
@@ -84,6 +93,7 @@ export default {
             text: this.text,
             username: this.username,
             userId: this.socketInstance.id,
+            roomName: this.joinedRoom,
         };
         this.messages = this.messages.concat(message); // show message in my client
         this.socketInstance.emit('message', message); // send message to others
@@ -107,6 +117,18 @@ export default {
             }
             return message;
         });
+    },
+    joinRoom(room) {
+        this.socketInstance.emit("join-room", {
+            roomName: room,
+        });
+        this.joinedRoom = room;
+    },
+    leaveRoom() {
+        this.socketInstance.emit("leave-room", {
+            roomName: this.joinedRoom,
+        });
+        this.joinedRoom = "";
     }
   }
 };

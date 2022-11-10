@@ -65,8 +65,16 @@ io.on("connection", (socket) => {
   });
   users[socket.id] = "Anonymous";
 
+  socket.on("join-room", data => {
+    socket.join(data.roomName);
+  });
+
+  socket.on("leave-room", data => {
+    socket.leave(data.roomName);
+  });
+
   socket.on('message', data => {
-      socket.broadcast.emit('message:received', data);
+    socket.to(data.roomName).emit('message:received', data);
   });
 
   socket.on('username', data => {
